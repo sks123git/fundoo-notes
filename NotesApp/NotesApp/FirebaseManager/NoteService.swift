@@ -9,11 +9,11 @@ import FirebaseAuth
 
 class NoteService{
     //Fetch data from data base
-    func fetchData(completion: @escaping ([Note]) -> Void ) {
+    func fetchData(isDeleted: Bool, completion: @escaping ([Note]) -> Void ) {
         guard let user = Auth.auth().currentUser else {
             return
         }
-        db.collection("users").document(user.uid).collection("notes").whereField("isDeleted", isEqualTo: false).getDocuments { querySnapshot, error in
+        db.collection("users").document(user.uid).collection("notes").whereField("isDeleted", isEqualTo: isDeleted).getDocuments { querySnapshot, error in
             if error != nil{
                 completion([])
                 return

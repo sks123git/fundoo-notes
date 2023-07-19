@@ -38,9 +38,6 @@ class LoginViewController: UIViewController {
                     self.view.window?.makeKeyAndVisible()
                     
                 }
-//                let homeViewController = self.storyboard?.instantiateViewController(identifier: Constants.Storyboard.homeViewController) as? MainViewController
-//                self.view.window?.rootViewController = UINavigationController(rootViewController: homeViewController!)
-//                self.view.window?.makeKeyAndVisible()
             }
         }
     }
@@ -50,16 +47,4 @@ class LoginViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

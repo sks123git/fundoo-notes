@@ -14,13 +14,17 @@ class BinViewController: UIViewController {
     let mainController = MainViewController()
     let noteService = NoteService()
     var recoveryItems: [Note] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        myCollectionView2.reloadData()
+        setRecoveryItem()
         // Do any additional setup after loading the view.
     }
-    func setRecoveryItem(recoveryItem: Note){
-        recoveryItems.append(recoveryItem)
+    func setRecoveryItem(){
+        noteService.fetchData(isDeleted: true) { notes in
+            self.recoveryItems = notes
+            self.myCollectionView2.reloadData()
+        }
     }
 }
 

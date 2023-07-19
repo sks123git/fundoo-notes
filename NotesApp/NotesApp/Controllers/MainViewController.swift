@@ -295,7 +295,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func checkIfAlreadyLoggedIn(){
-        noteService.fetchData { notes in
+        noteService.fetchData(isDeleted: false) { notes in
             DispatchQueue.main.async {
                         self.models = notes
                         self.myCollectionView?.reloadData()
@@ -327,20 +327,16 @@ extension MainViewController: UITableViewDelegate,UITableViewDataSource{
         guard let menuOption = MenuOption(rawValue: indexPath.row)?.description else{
             return
         }
-        print("selected menu option \(menuOption)")
         switch menuOption{
         case "profile":
             print("show profile")
-        case "inbox":
+        case "reminders":
             print("show inbox")
         case "trash":
-            print("inside trash")
-            
             guard let vc = storyboard?.instantiateViewController(withIdentifier: "bin") as? BinViewController else {
                 print("error")
                 return
             }
-            print("bin vc created")
             let nav = UINavigationController(rootViewController: vc)
             self.present(nav, animated: true)
             

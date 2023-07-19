@@ -9,7 +9,7 @@ import UIKit
 
 enum MenuOption: Int, CustomStringConvertible {
     case Profile
-    case Inbox
+    case Reminders
     case Trash
     case Logout
     
@@ -17,7 +17,7 @@ enum MenuOption: Int, CustomStringConvertible {
         switch self{
             
         case .Profile: return "profile"
-        case .Inbox: return "inbox"
+        case .Reminders: return "reminder"
         case .Trash: return "trash"
         case .Logout: return "logout"
         }
