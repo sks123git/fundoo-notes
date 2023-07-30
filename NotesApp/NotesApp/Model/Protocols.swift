@@ -16,3 +16,6 @@ protocol TrashCollectionViewDataProtocol{
     func permanentDelete(indx: Int)
     func recoverData(indx: Int)
 }
+protocol ReminderCollectionViewDataProtocol{
+    func returnReminderStatus(indx: Int)
+}

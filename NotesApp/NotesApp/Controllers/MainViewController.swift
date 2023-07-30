@@ -13,6 +13,7 @@ class MainViewController: UIViewController {
     var models: [Note] = []
     
     @IBOutlet weak var myCollectionView: UICollectionView!
+    @IBOutlet weak var collectionViewToggleBtn: UIBarButtonItem!
     let searchController = UISearchController(searchResultsController: nil)
     var noteService = NoteService()
     var notesDocID: String = ""
@@ -26,23 +27,34 @@ class MainViewController: UIViewController {
     var tapGesture = UITapGestureRecognizer()
     var tempView = UIView()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         checkIfAlreadyLoggedIn()
         configureSearchController()
-        
+        myCollectionView!.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        configureSidebar()
+        configureTempSwipeView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.myCollectionView.reloadData()
+    }
+    func configureSidebar(){
         sideBarView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: self.view.bounds.height))
         tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 0, height: self.view.bounds.height))
         tableView.backgroundColor = .lightGray
-        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.isOpaque = true
         self.view.addSubview(sideBarView)
         self.sideBarView.addSubview(tableView)
-        tableView.isOpaque = true
-        
+    }
+    
+    
+    func configureTempSwipeView(){
         swipeToRight = UISwipeGestureRecognizer(target: self, action: #selector(didSwipedToRight))
         swipeToRight.direction = .right
         self.view.addGestureRecognizer(swipeToRight)
@@ -56,6 +68,7 @@ class MainViewController: UIViewController {
         tempView.addGestureRecognizer(tapGesture)
     }
     
+    
     @objc func closeSideBarView(){
         self.view.addGestureRecognizer(swipeToRight)
         self.view.removeGestureRecognizer(swipeToLeft)
@@ -67,6 +80,7 @@ class MainViewController: UIViewController {
         self.tempView.isHidden = true
         isEnableSidebarView = false
     }
+    
     
     @objc func didSwipedToRight(){
         self.view.addGestureRecognizer(swipeToLeft)
@@ -80,6 +94,7 @@ class MainViewController: UIViewController {
         isEnableSidebarView = true
     }
     
+    
     @objc func didSwipedToLeft(){
         self.view.addGestureRecognizer(swipeToRight)
         self.view.removeGestureRecognizer(swipeToLeft)
@@ -92,8 +107,8 @@ class MainViewController: UIViewController {
         isEnableSidebarView = false
     }
     
+    
     @IBAction func didTapMenu(){
-        
         if isEnableSidebarView{
             self.view.addGestureRecognizer(swipeToRight)
             self.view.removeGestureRecognizer(swipeToLeft)
@@ -104,7 +119,9 @@ class MainViewController: UIViewController {
             }
             self.tempView.isHidden = true
             isEnableSidebarView = false
-        }else{
+        }
+        else
+        {
             self.view.addGestureRecognizer(swipeToLeft)
             self.view.removeGestureRecognizer(swipeToRight)
             UIView.animate(withDuration: 0.5){
@@ -122,42 +139,17 @@ class MainViewController: UIViewController {
         if Constants.View.changeViewToLandscape == true{
             Constants.View.changeValueTo = 0
             Constants.View.changeViewToLandscape = false
+            collectionViewToggleBtn.image = UIImage(systemName: "platter.2.filled.iphone.landscape")
             self.myCollectionView.reloadData()
         } else {
             Constants.View.changeValueTo = 10
             Constants.View.changeViewToLandscape = true
+            collectionViewToggleBtn.image = UIImage(systemName: "platter.2.filled.ipad")
             self.myCollectionView.reloadData()
         }
         self.myCollectionView.reloadData()
     }
     
-//    func didSelectMenuOption(menuOption: String){
-//        switch menuOption{
-//        case "profile":
-//            print("show profile")
-//        case "inbox":
-//            print("show inbox")
-//        case "trash":
-//            print("inside trash")
-//
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//            guard let vc = storyboard.instantiateViewController(withIdentifier: "bin") as? BinViewController else {
-//                print("error")
-//                return
-//            }
-//            print("bin vc created")
-////            self.navigationController?.pushViewController(vc, animated: true)
-//            let nav = UINavigationController(rootViewController: vc)
-//            DispatchQueue.main.async {
-//                self.present(nav, animated: true)
-//            }
-//
-//        case "logout":
-//            self.didTapToLogout()
-//        default:
-//            print("")
-//        }
-//    }
     
     func didTapToLogout(){
         AuthService.logOut { isLogoutSuccess in
@@ -168,33 +160,35 @@ class MainViewController: UIViewController {
                     sd.window?.rootViewController = UINavigationController(rootViewController: homeViewController!)
                     self.view.window?.makeKeyAndVisible()
                 }
-            }else{
-                
             }
         }
     }
+    
     
     @IBAction func didTapToNewNote(_ sender: UIBarButtonItem) {
         guard let vc = self.storyboard?.instantiateViewController(identifier: "new") as? NewNoteViewController else{
             return
         }
+        
         vc.title = "New Note"
         vc.completion = {
             notetitle, note, uid, isDeleted in
+            
             let scene = UIApplication.shared.connectedScenes.first
+            
             if let sd : SceneDelegate = (scene?.delegate as? SceneDelegate) {
                 let homeViewController = self.storyboard?.instantiateViewController(identifier: Constants.Storyboard.homeViewController) as? MainViewController
                 sd.window?.rootViewController = UINavigationController(rootViewController: homeViewController!)
                 self.view.window?.makeKeyAndVisible()
-                
             }
-            self.models.append(Note.init(uid: uid, title: notetitle, note: note, isDeleted: isDeleted))
-            self.noteService.addToDatabase(notetitle: notetitle, note: note, uid: uid, isDeleted: isDeleted)
+            self.models.append(Note.init(uid: uid, title: notetitle, note: note, isDeleted: isDeleted, isReminderSet: false))
+            self.noteService.addToDatabase(notetitle: notetitle, note: note, uid: uid, isDeleted: isDeleted, isReminderSet: false)
             self.myCollectionView.isHidden = false
             self.myCollectionView.reloadData()
         }
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
     
     private func configureSearchController(){
         searchController.loadViewIfNeeded()
@@ -232,11 +226,13 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         myCollectionView.reloadData()
     }
     
+    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searching = false
         searchedResult.removeAll()
         myCollectionView.reloadData()
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if searching{
@@ -245,6 +241,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             return models.count
         }
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = myCollectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewCell
@@ -265,15 +262,19 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let size = (collectionView.frame.size.width - CGFloat(Constants.View.changeValueTo))/2
+        let width = view.bounds.width
+        let padding: CGFloat =  10
+        let minimumItemSpacing: CGFloat = 10
+        let availableWidth = width - (padding * 2) - (minimumItemSpacing * 2)
+        let itemWidth = availableWidth / 2
         if Constants.View.changeViewToLandscape == true {
-            return CGSize(width: size, height: size)}
+            return CGSize(width: itemWidth, height: itemWidth)}
         else{
             return CGSize(width: collectionView.frame.size.width, height: 100)
         }
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
         myCollectionView.deselectItem(at: indexPath, animated: true)
@@ -294,20 +295,24 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         return true
     }
     
+    
     func checkIfAlreadyLoggedIn(){
         noteService.fetchData(isDeleted: false) { notes in
             DispatchQueue.main.async {
-                        self.models = notes
-                        self.myCollectionView?.reloadData()
-                    }
-                }
+                self.models = notes
+                self.myCollectionView?.reloadData()
             }
         }
+    }
+}
+
 extension MainViewController: UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 4
     }
+    
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.backgroundColor = .lightGray
@@ -319,44 +324,61 @@ extension MainViewController: UITableViewDelegate,UITableViewDataSource{
         }
         return cell
     }
+    
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
+    
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         guard let menuOption = MenuOption(rawValue: indexPath.row)?.description else{
             return
         }
         switch menuOption{
-        case "profile":
-            print("show profile")
-        case "reminders":
-            print("show inbox")
-        case "trash":
+        case "Profile":
+            guard let vc = storyboard?.instantiateViewController(withIdentifier: "Profile") as? ProfileViewController else {
+                print("error")
+                return
+            }
+            let nav = UINavigationController(rootViewController: vc)
+            self.present(nav, animated: true)
+        case "Reminder":
+            let vc = RemindersViewController()
+            vc.models = self.models
+            self.present(vc, animated: true)
+        case "Trash":
             guard let vc = storyboard?.instantiateViewController(withIdentifier: "bin") as? BinViewController else {
                 print("error")
                 return
             }
             let nav = UINavigationController(rootViewController: vc)
             self.present(nav, animated: true)
-            
-        case "logout":
+        case "Logout":
             self.didTapToLogout()
         default:
             print("")
         }
-//        mainViewController.didSelectMenuOption(menuOption: menuOption)
     }
 }
 
 extension MainViewController: CollectionViewDataProtocol{
+    
     func setNotification(indx: Int) {
         setTimerForCollectionIndex = indx
         guard let vc = storyboard?.instantiateViewController(withIdentifier: "timeInputVC") as? TimeInputController else{
             return
         }
+        vc.completion = {
+            isReminderSet in
+            self.noteService.setReminder(notesDocID: self.models[indx].uid ?? "", isReminderSet: isReminderSet)
+            self.models[indx].isReminderSet = isReminderSet
+        }
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    
     func deleteData(indx: Int) {
         guard let notesDocID = models[indx].uid else {
             return

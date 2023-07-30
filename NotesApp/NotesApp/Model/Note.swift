@@ -10,8 +10,5 @@ struct Note: Codable{
     var title: String?
     var note: String?
     var isDeleted: Bool = false
-//    enum CodingKeys: String, CodingKey{
-//        case title
-//        case note
-//    }
+    var isReminderSet: Bool = false
 }

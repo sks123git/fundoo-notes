@@ -15,21 +15,10 @@ enum MenuOption: Int, CustomStringConvertible {
     
     var description: String{
         switch self{
-            
-        case .Profile: return "profile"
-        case .Reminders: return "reminder"
-        case .Trash: return "trash"
-        case .Logout: return "logout"
+        case .Profile: return "Profile"
+        case .Reminders: return "Reminder"
+        case .Trash: return "Trash"
+        case .Logout: return "Logout"
         }
     }
-    
-//    var image: UIImage{
-//        switch self{
-//
-//        case .Profile: return UIImage(named: "user") ?? UIImage()
-//        case .Inbox: return UIImage(named: "email") ?? UIImage()
-//        case .Notifications: return UIImage(named: "menu") ?? UIImage()
-//        case .Settings: return UIImage(named: "setting") ?? UIImage()
-//        }
-//    }
 }

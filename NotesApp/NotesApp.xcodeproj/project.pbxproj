@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		5B2C4C2A3295C9981B97B3DB /* Pods_NotesApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D42687A81379F9CFEAD374D1 /* Pods_NotesApp.framework */; };
+		FA1659AB2A691B5300D7FC86 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1659AA2A691B5300D7FC86 /* ProfileViewController.swift */; };
+		FA1659AD2A691EDB00D7FC86 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1659AC2A691EDB00D7FC86 /* Profile.swift */; };
+		FA1659C12A6C138200D7FC86 /* RemindersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1659C02A6C138200D7FC86 /* RemindersViewController.swift */; };
+		FA1659C32A6C1E6B00D7FC86 /* ReminderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1659C22A6C1E6B00D7FC86 /* ReminderViewCell.swift */; };
 		FA1E4C632A4B2D490093AB60 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E4C622A4B2D490093AB60 /* AuthService.swift */; };
 		FA1E4C652A4B32F50093AB60 /* NoteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E4C642A4B32F50093AB60 /* NoteService.swift */; };
 		FA2096102A4AAD1C009A6857 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA20960F2A4AAD1B009A6857 /* Note.swift */; };
@@ -36,6 +40,10 @@
 		8E1C3E5FD26C25F978032745 /* Pods-NotesApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotesApp.release.xcconfig"; path = "Target Support Files/Pods-NotesApp/Pods-NotesApp.release.xcconfig"; sourceTree = "<group>"; };
 		B23268B07692322C6F91AC24 /* Pods-NotesApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotesApp.debug.xcconfig"; path = "Target Support Files/Pods-NotesApp/Pods-NotesApp.debug.xcconfig"; sourceTree = "<group>"; };
 		D42687A81379F9CFEAD374D1 /* Pods_NotesApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NotesApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA1659AA2A691B5300D7FC86 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		FA1659AC2A691EDB00D7FC86 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		FA1659C02A6C138200D7FC86 /* RemindersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersViewController.swift; sourceTree = "<group>"; };
+		FA1659C22A6C1E6B00D7FC86 /* ReminderViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderViewCell.swift; sourceTree = "<group>"; };
 		FA1E4C622A4B2D490093AB60 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		FA1E4C642A4B32F50093AB60 /* NoteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteService.swift; sourceTree = "<group>"; };
 		FA20960F2A4AAD1B009A6857 /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
@@ -59,7 +67,7 @@
 		FAC973C22A433A8E00506E48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FAC973C82A441C8900506E48 /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 		FAC973CA2A441CB800506E48 /* NewNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNoteViewController.swift; sourceTree = "<group>"; };
-		FAF29EC52A4F1E19001FA15E /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CollectionViewCell.swift; path = NotesApp/Utils/CollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
+		FAF29EC52A4F1E19001FA15E /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CollectionViewCell.swift; path = NotesApp/Views/ViewCells/CollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,19 +99,94 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		FA1E4C5E2A4B2BDC0093AB60 /* Controllers */ = {
+		FA1659A72A6913EB00D7FC86 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FA1659A82A6913F800D7FC86 /* ViewCells */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FA1659A82A6913F800D7FC86 /* ViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				FAF29EC52A4F1E19001FA15E /* CollectionViewCell.swift */,
+				FA9B42572A5AFCD8004F5100 /* TrashCollectionViewCell.swift */,
+				FA1659C22A6C1E6B00D7FC86 /* ReminderViewCell.swift */,
+			);
+			path = ViewCells;
+			sourceTree = "<group>";
+		};
+		FA1659A92A69146600D7FC86 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				FAC973B42A433A8C00506E48 /* AppDelegate.swift */,
+				FAC973B62A433A8C00506E48 /* SceneDelegate.swift */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		FA1659B12A69757900D7FC86 /* SignupLogin */ = {
 			isa = PBXGroup;
 			children = (
 				FA30BACE2A495FEE00CB42B1 /* SignupViewController.swift */,
 				FA30BAD02A495FFB00CB42B1 /* LoginViewController.swift */,
 				FA841C202A495C78006AD5CC /* SignupLoginViewController.swift */,
-				FAC973B82A433A8C00506E48 /* MainViewController.swift */,
-				FAF29EC52A4F1E19001FA15E /* CollectionViewCell.swift */,
+			);
+			path = SignupLogin;
+			sourceTree = "<group>";
+		};
+		FA1659B22A6975B000D7FC86 /* NoteViewControllers */ = {
+			isa = PBXGroup;
+			children = (
 				FAC973C82A441C8900506E48 /* NoteViewController.swift */,
-				FA25DF382A56DB7500E609C0 /* TimeInputController.swift */,
 				FAC973CA2A441CB800506E48 /* NewNoteViewController.swift */,
+			);
+			path = NoteViewControllers;
+			sourceTree = "<group>";
+		};
+		FA1659B32A6975E100D7FC86 /* BinViewControllers */ = {
+			isa = PBXGroup;
+			children = (
 				FA88CE942A5AE6F100778F90 /* BinViewController.swift */,
-				FA9B42572A5AFCD8004F5100 /* TrashCollectionViewCell.swift */,
+			);
+			path = BinViewControllers;
+			sourceTree = "<group>";
+		};
+		FA1659B42A69761300D7FC86 /* NotificationController */ = {
+			isa = PBXGroup;
+			children = (
+				FA25DF382A56DB7500E609C0 /* TimeInputController.swift */,
+			);
+			path = NotificationController;
+			sourceTree = "<group>";
+		};
+		FA1659B52A69763700D7FC86 /* ProfileViewController */ = {
+			isa = PBXGroup;
+			children = (
+				FA1659AA2A691B5300D7FC86 /* ProfileViewController.swift */,
+			);
+			path = ProfileViewController;
+			sourceTree = "<group>";
+		};
+		FA1659BF2A6C12D100D7FC86 /* RemindersController */ = {
+			isa = PBXGroup;
+			children = (
+				FA1659C02A6C138200D7FC86 /* RemindersViewController.swift */,
+			);
+			path = RemindersController;
+			sourceTree = "<group>";
+		};
+		FA1E4C5E2A4B2BDC0093AB60 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FA1659BF2A6C12D100D7FC86 /* RemindersController */,
+				FA1659B52A69763700D7FC86 /* ProfileViewController */,
+				FA1659B42A69761300D7FC86 /* NotificationController */,
+				FA1659B32A6975E100D7FC86 /* BinViewControllers */,
+				FA1659B22A6975B000D7FC86 /* NoteViewControllers */,
+				FA1659B12A69757900D7FC86 /* SignupLogin */,
+				FAC973B82A433A8C00506E48 /* MainViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -114,6 +197,7 @@
 				FA20960F2A4AAD1B009A6857 /* Note.swift */,
 				FA3925A12A4D6B4D00F41122 /* MenuOptions.swift */,
 				FA3925A32A4D6CA900F41122 /* Protocols.swift */,
+				FA1659AC2A691EDB00D7FC86 /* Profile.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -156,12 +240,12 @@
 		FAC973B32A433A8C00506E48 /* NotesApp */ = {
 			isa = PBXGroup;
 			children = (
+				FA1659A92A69146600D7FC86 /* Support */,
+				FA1659A72A6913EB00D7FC86 /* Views */,
 				FA1E4C612A4B2C260093AB60 /* FirebaseManager */,
 				FA1E4C602A4B2C0F0093AB60 /* Utils */,
 				FA1E4C5F2A4B2BFB0093AB60 /* Model */,
 				FA1E4C5E2A4B2BDC0093AB60 /* Controllers */,
-				FAC973B42A433A8C00506E48 /* AppDelegate.swift */,
-				FAC973B62A433A8C00506E48 /* SceneDelegate.swift */,
 				FAC973BA2A433A8C00506E48 /* Main.storyboard */,
 				FAC973BD2A433A8E00506E48 /* Assets.xcassets */,
 				FAC973BF2A433A8E00506E48 /* LaunchScreen.storyboard */,
@@ -292,14 +376,18 @@
 				FA30BACF2A495FEE00CB42B1 /* SignupViewController.swift in Sources */,
 				FAC973CB2A441CB800506E48 /* NewNoteViewController.swift in Sources */,
 				FAC973C92A441C8900506E48 /* NoteViewController.swift in Sources */,
+				FA1659AD2A691EDB00D7FC86 /* Profile.swift in Sources */,
 				FA2096102A4AAD1C009A6857 /* Note.swift in Sources */,
 				FAF29EC62A4F1E19001FA15E /* CollectionViewCell.swift in Sources */,
+				FA1659C12A6C138200D7FC86 /* RemindersViewController.swift in Sources */,
 				FA1E4C632A4B2D490093AB60 /* AuthService.swift in Sources */,
 				FA88CE952A5AE6F100778F90 /* BinViewController.swift in Sources */,
+				FA1659AB2A691B5300D7FC86 /* ProfileViewController.swift in Sources */,
 				FA25DF392A56DB7500E609C0 /* TimeInputController.swift in Sources */,
 				FA30BAD12A495FFB00CB42B1 /* LoginViewController.swift in Sources */,
 				FAC973B92A433A8C00506E48 /* MainViewController.swift in Sources */,
 				FAB34E802A4983FD00A79BCE /* Constants.swift in Sources */,
+				FA1659C32A6C1E6B00D7FC86 /* ReminderViewCell.swift in Sources */,
 				FA3925A42A4D6CA900F41122 /* Protocols.swift in Sources */,
 				FAC973B52A433A8C00506E48 /* AppDelegate.swift in Sources */,
 				FA3925A22A4D6B4D00F41122 /* MenuOptions.swift in Sources */,

@@ -19,7 +19,7 @@ class LoginViewController: UIViewController {
     @IBAction func loginBtnTapped(_ sender: Any) {
         let noteService = NoteService()
         //Validate text fields
-
+        
         
         let email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         defaults.set(email, forKey: "email")
@@ -44,7 +44,5 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
 }

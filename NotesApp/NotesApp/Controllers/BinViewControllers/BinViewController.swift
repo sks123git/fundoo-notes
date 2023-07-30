@@ -9,8 +9,7 @@ import UIKit
 
 class BinViewController: UIViewController {
     
-    
-   @IBOutlet weak var myCollectionView2: UICollectionView!
+    @IBOutlet weak var myCollectionView2: UICollectionView!
     let mainController = MainViewController()
     let noteService = NoteService()
     var recoveryItems: [Note] = []
@@ -20,6 +19,7 @@ class BinViewController: UIViewController {
         setRecoveryItem()
         // Do any additional setup after loading the view.
     }
+    
     func setRecoveryItem(){
         noteService.fetchData(isDeleted: true) { notes in
             self.recoveryItems = notes
@@ -36,8 +36,8 @@ extension BinViewController: UICollectionViewDelegate, UICollectionViewDataSourc
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = myCollectionView2.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! TrashCollectionViewCell
         
-            cell.title.text = recoveryItems[indexPath.item].title
-            cell.textNote.text = recoveryItems[indexPath.item].note
+        cell.title.text = recoveryItems[indexPath.item].title
+        cell.textNote.text = recoveryItems[indexPath.item].note
         
         cell.layer.borderWidth = 1
         cell.layer.cornerRadius = 10
@@ -48,16 +48,23 @@ extension BinViewController: UICollectionViewDelegate, UICollectionViewDataSourc
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let size = (collectionView.frame.size.width)
-            return CGSize(width: size  , height: (collectionView.frame.size.width - 10)/2)
-    
+        
+        let width = view.bounds.width
+        let padding: CGFloat =  5
+        let minimumItemSpacing: CGFloat = 5
+        let availableWidth = width - (padding * 2) - (minimumItemSpacing * 2)
+        let itemWidth = availableWidth / 2
+        return CGSize(width: itemWidth - 20, height: itemWidth - 20)
+        
     }
 }
+
 extension BinViewController: TrashCollectionViewDataProtocol{
     func permanentDelete(indx: Int) {
         guard let notesDocID = recoveryItems[indx].uid else {
             return
         }
+        
         noteService.deleteFromDatabase(notesDocID: notesDocID)
         recoveryItems.remove(at: indx)
         self.myCollectionView2.reloadData()

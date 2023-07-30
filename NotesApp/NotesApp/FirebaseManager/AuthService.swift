@@ -10,7 +10,7 @@ let USER_DOCUMENT_ID = "USER_DOCUMENT_ID"
 
 class AuthService{
     
-   static func login(email: String, password: String,  completion: @escaping (Error?,AuthDataResult?) -> Void){
+    static func login(email: String, password: String,  completion: @escaping (Error?,AuthDataResult?) -> Void){
         Auth.auth().signIn(withEmail: email, password: password){(result,error) in
             guard let user = result?.user else {
                 return
@@ -21,19 +21,19 @@ class AuthService{
     }
     static func signUp(email: String, password: String, firstName: String, lastName: String,  completion: @escaping (Error?,AuthDataResult?) -> Void){
         Auth.auth().createUser(withEmail: email, password: password) { (result, err) in
-                guard let user = result?.user else {
-                    return
-                } //User created successfully
-               let uid = user.uid
-                db.collection("users").document(uid).setData(["firstname": firstName, "lastname": lastName, "UID": result!.user.uid]){ (error) in
-                    if error != nil{
-                        //show error message
-                        print("Error while signup")
-                    }
+            guard let user = result?.user else {
+                return
+            } //User created successfully
+            let uid = user.uid
+            db.collection("users").document(uid).setData(["firstname": firstName, "lastname": lastName, "UID": result!.user.uid]){ (error) in
+                if error != nil{
+                    //show error message
+                    print("Error while signup")
                 }
-            completion(err,result)
             }
+            completion(err,result)
         }
+    }
     static func logOut(completion: @escaping (Bool) -> Void){
         do {
             try Auth.auth().signOut()
@@ -43,4 +43,4 @@ class AuthService{
         }
         
     }
-    }
+}
